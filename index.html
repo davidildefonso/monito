@@ -42,19 +42,24 @@
 	</div>
 
   <script>
-	let audio;
+	let 	audioGame = document.getElementById("musica")
+	let audioJump  = document.getElementById("jump")
+	let audioCoin = document.getElementById("coin")
+	let audioWin  = document.getElementById("winlevel");
+	let audioLost  = document.getElementById("lost");
+
 	function playGame(){
 		document.getElementById("principal").style.display = "block"			
 		document.getElementById("menu").style.display = "none"
-		audio = document.getElementById("musica")
-		audio.play()	
+	
+		audioGame.play()	
 		setInterval(restartAudio,33000)
 		runGame(GAME_LEVELS, CanvasDisplay);
 	}
 
 	function endGame(){
-		audio.pause();
-		audio.currentTime = 0;
+		audioGame.pause();
+		audioGame.currentTime = 0;
 		clearInterval(restartAudio)
 		document.getElementById("principal").style.display = "none"
 		document.getElementById("menu-final").style.display = "block"
@@ -64,8 +69,8 @@
 	function restart(){
 		document.getElementById("principal").style.display = "block"			
 		document.getElementById("menu-final").style.display = "none"
-		audio = document.getElementById("musica")
-		audio.play()
+		
+		audioGame.play()
 		runGame(GAME_LEVELS, CanvasDisplay);
 
 	}
@@ -76,9 +81,9 @@
 	}
 
 	function restartAudio(){
-		audio.pause();
-		audio.currentTime = 0;
-		audio.play()
+		audioGame.pause();
+		audioGame.currentTime = 0;
+		audioGame.play()
 	}
 
 

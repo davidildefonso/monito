@@ -236,14 +236,14 @@ State.prototype.update = function(time, keys) {
 
   let player = newState.player;
   if (this.level.touches(player.pos, player.size, "lava")) {
-	audio = document.getElementById("lost")
-	audio.play()	
+	
+	audioLost.play()	
 	lives--	
 	document.getElementById("lives").innerText = lives
 
-	audio = document.getElementById("musica")
-	audio.pause()
-	audio.currentTime = 0;
+	
+	audioGame.pause()
+	audioGame.currentTime = 0;
 	clearInterval(restartAudio)
 
     return new State(this.level, actors, "lost");
@@ -265,37 +265,37 @@ function overlap(actor1, actor2) {
 }
 
 Lava.prototype.collide = function(state) {	
-	audio = document.getElementById("lost")
-	audio.play()	
+
+	audioLost.play()	
 	lives--	
 	document.getElementById("lives").innerText = lives
 
-	audio = document.getElementById("musica")
-	audio.pause()
-	audio.currentTime = 0;
+	
+	audioGame.pause()
+	audioGame.currentTime = 0;
 	clearInterval(restartAudio)
 
-	
+
   	return new State(state.level, state.actors, "lost");
   
 };
 
 Coin.prototype.collide = function(state) {
-	audio = document.getElementById("coin")
-	if (audio.paused == false) {
-		audio.pause();
-		audio.currentTime = 0;
-		audio.play()
+	
+	if (audioCoin.paused == false) {
+		audioCoin.pause();
+		audioCoin.currentTime = 0;
+		audioCoin.play()
 	}else{
-		audio.play()
+		audioCoin.play()
 	}
 
 		
 	let filtered = state.actors.filter(a => a != this);
 	let status = state.status;
 	if (!filtered.some(a => a.type == "coin"))  {
-		audio = document.getElementById("winlevel")
-		audio.play()	
+		
+		audioWin.play()	
 		status = "won";
 	} 
 	return new State(state.level, filtered, status);
@@ -322,7 +322,7 @@ Coin.prototype.update = function(time) {
 };
 
 var playerXSpeed = 7;
-var gravity = 33;
+var gravity = 30;
 var jumpSpeed = 17;
 
 Player.prototype.update = function(time, state, keys) {
@@ -341,13 +341,13 @@ Player.prototype.update = function(time, state, keys) {
     pos = movedY;
   } else if (keys.ArrowUp && ySpeed > 0) {
 	
-	audio = document.getElementById("jump")
-	if (audio.paused == false) {
-		audio.pause();
-		audio.currentTime = 0;
-		audio.play()
+	
+	if (audioJump.paused == false) {
+		audioJump.pause();
+		audioJump.currentTime = 0;
+		audioJump.play()
 	}else{
-		audio.play()
+		audioJump.play()
 	}
 
 	
@@ -388,25 +388,30 @@ function runAnimation(frameFunc) {
 }
 
 function runLevel(level, Display) {
-  let display = new Display(document.getElementById("canvas"), level);
-  let state = State.start(level);
-  let ending = 1;
-  return new Promise(resolve => {
-    runAnimation(time => {
-      state = state.update(time, arrowKeys);
-      display.syncState(state);
-      if (state.status == "playing") {
-        return true;
-      } else if (ending > 0) {
-        ending -= time;
-        return true;
-      } else {
-        display.clear();
-        resolve(state.status);
-        return false;
-      }
-    });
-  });
+
+
+	audioGame.play()	
+	setInterval(restartAudio,33000)
+
+	let display = new Display(document.getElementById("canvas"), level);
+	let state = State.start(level);
+	let ending = 1;
+	return new Promise(resolve => {
+		runAnimation(time => {
+		state = state.update(time, arrowKeys);
+		display.syncState(state);
+		if (state.status == "playing") {
+			return true;
+		} else if (ending > 0) {
+			ending -= time;
+			return true;
+		} else {
+			display.clear();
+			resolve(state.status);
+			return false;
+		}
+		});
+	});
 }
 
 async function runGame(plans, Display) {
@@ -419,9 +424,7 @@ async function runGame(plans, Display) {
     let status = await runLevel(new Level(plans[level]),
                                 Display);
 
-	audio = document.getElementById("musica")
-	audio.play()	
-	setInterval(restartAudio,33000)
+	
 
 	if (lives == 0) {
 		endGame();
