@@ -37,7 +37,9 @@
 	<div id="menu-final" >
 		<div>
 			<button id="boton-restart" onclick="restart()"  >Restart</button>		
-			<button id="boton-menu" onclick="home()"  >Menu</button>		
+			<button id="boton-menu" onclick="home()"  >
+				<img src="img/menu plataforma monito.png"  />
+			</button>		
 		</div>
 	</div>
 
@@ -48,35 +50,34 @@
 	let audioWin  = document.getElementById("winlevel");
 	let audioLost  = document.getElementById("lost");
 
+	let musicInterval
+
 	function playGame(){
-		document.getElementById("principal").style.display = "block"			
-		document.getElementById("menu").style.display = "none"
-	
-		audioGame.play()	
-		setInterval(restartAudio,33000)
+		document.getElementById("principal").style.display = "flex"			
+		document.getElementById("menu").style.display = "none"	
+		
 		runGame(GAME_LEVELS, CanvasDisplay);
 	}
 
 	function endGame(){
 		audioGame.pause();
 		audioGame.currentTime = 0;
-		clearInterval(restartAudio)
+		clearInterval(musicInterval)
 		document.getElementById("principal").style.display = "none"
-		document.getElementById("menu-final").style.display = "block"
-		lives = 2;
+		document.getElementById("menu-final").style.display = "flex"
+		lives = 6;
 	}
 
 	function restart(){
-		document.getElementById("principal").style.display = "block"			
-		document.getElementById("menu-final").style.display = "none"
+		document.getElementById("principal").style.display = "flex"			
+		document.getElementById("menu-final").style.display = "none"		
 		
-		audioGame.play()
 		runGame(GAME_LEVELS, CanvasDisplay);
 
 	}
 
 	function home(){
-		document.getElementById("menu").style.display = "block"			
+		document.getElementById("menu").style.display = "flex"			
 		document.getElementById("menu-final").style.display = "none"
 	}
 

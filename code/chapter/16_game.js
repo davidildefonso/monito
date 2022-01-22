@@ -33,11 +33,12 @@ var Level = class Level {
 }
 
 var State = class State {
-  constructor(level, actors, status, fullscreen = false) {
+  constructor(level, actors, status, fullscreen = false, transitioning = false) {
     this.level = level;
     this.actors = actors;
     this.status = status;
 	this.fullscreen = fullscreen
+	this.transitioning = transitioning
   }
 
   static start(level) {
@@ -242,9 +243,7 @@ State.prototype.update = function(time, keys) {
 	document.getElementById("lives").innerText = lives
 
 	
-	audioGame.pause()
-	audioGame.currentTime = 0;
-	clearInterval(restartAudio)
+	restartAudio()
 
     return new State(this.level, actors, "lost");
   }
@@ -271,9 +270,7 @@ Lava.prototype.collide = function(state) {
 	document.getElementById("lives").innerText = lives
 
 	
-	audioGame.pause()
-	audioGame.currentTime = 0;
-	clearInterval(restartAudio)
+	restartAudio()
 
 
   	return new State(state.level, state.actors, "lost");
@@ -295,10 +292,15 @@ Coin.prototype.collide = function(state) {
 	let status = state.status;
 	if (!filtered.some(a => a.type == "coin"))  {
 		
+		restartAudio()
+
 		audioWin.play()	
 		status = "won";
+		
 	} 
-	return new State(state.level, filtered, status);
+
+	return new State(state.level, filtered, status, state.fullscreen, true);
+	
 };
 
 Lava.prototype.update = function(time, state) {
@@ -389,14 +391,17 @@ function runAnimation(frameFunc) {
 
 function runLevel(level, Display) {
 
-
+	clearInterval(musicInterval)
 	audioGame.play()	
-	setInterval(restartAudio,33000)
+	musicInterval = setInterval(restartAudio,33000)
 
 	let display = new Display(document.getElementById("canvas"), level);
 	let state = State.start(level);
+	
 	let ending = 1;
 	return new Promise(resolve => {
+
+		console.log(state)
 		runAnimation(time => {
 		state = state.update(time, arrowKeys);
 		display.syncState(state);
@@ -424,10 +429,12 @@ async function runGame(plans, Display) {
     let status = await runLevel(new Level(plans[level]),
                                 Display);
 
-	
-
 	if (lives == 0) {
+
+		clearInterval(musicInterval)
+
 		endGame();
+
 		return
 	};
     if (status == "won")   level++;
