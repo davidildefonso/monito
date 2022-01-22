@@ -267,7 +267,15 @@ Lava.prototype.collide = function(state) {
 
 Coin.prototype.collide = function(state) {
 	audio = document.getElementById("coin")
-	audio.play()	
+	if (audio.paused == false) {
+		audio.pause();
+		audio.currentTime = 0;
+		audio.play()
+	}else{
+		audio.play()
+	}
+
+		
 	let filtered = state.actors.filter(a => a != this);
 	let status = state.status;
 	if (!filtered.some(a => a.type == "coin"))  {
