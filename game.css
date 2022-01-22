@@ -51,3 +51,7 @@ body {
 	border: none;
 	cursor: pointer;
 }
+
+#menu-final{
+	display: none;
+}

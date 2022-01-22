@@ -11,7 +11,7 @@ var simpleLevelPlan = `
 
 
 
-let lives = 2
+let lives = 6
 
 var Level = class Level {
   constructor(plan) {
@@ -236,7 +236,7 @@ State.prototype.update = function(time, keys) {
 
   let player = newState.player;
   if (this.level.touches(player.pos, player.size, "lava")) {
-	lives--
+	lives--	
 	document.getElementById("lives").innerText = lives
     return new State(this.level, actors, "lost");
   }
@@ -257,7 +257,8 @@ function overlap(actor1, actor2) {
 }
 
 Lava.prototype.collide = function(state) {	
-	lives--
+	lives--	
+	document.getElementById("lives").innerText = lives
   return new State(state.level, state.actors, "lost");
   
 };
