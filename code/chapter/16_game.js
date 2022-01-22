@@ -256,7 +256,8 @@ function overlap(actor1, actor2) {
          actor1.pos.y < actor2.pos.y + actor2.size.y;
 }
 
-Lava.prototype.collide = function(state) {
+Lava.prototype.collide = function(state) {	
+	lives--
   return new State(state.level, state.actors, "lost");
   
 };

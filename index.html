@@ -16,8 +16,9 @@
 
 
 	<div id ="menu" >
+		<div>MONITO </div>
 		<div>
-			<button id="botonplay" onclick="play()"  >
+			<button id="botonplay" onclick="playGame()"  >
 				<img src="img/plataforma monito play.png" />
 			</button>			
 			<audio id="musica" src="Media/music.mp3"  ></audio>
@@ -38,7 +39,7 @@
 
   <script>
 	let audio;
-	function play(){
+	function playGame(){
 		document.getElementById("principal").style.display = "block"			
 		document.getElementById("menu").style.display = "none"
 		audio = document.getElementById("musica")
