@@ -257,17 +257,21 @@ function overlap(actor1, actor2) {
 }
 
 Lava.prototype.collide = function(state) {	
+	audio = document.getElementById("lost")
+	audio.play()	
 	lives--	
 	document.getElementById("lives").innerText = lives
-  return new State(state.level, state.actors, "lost");
+  	return new State(state.level, state.actors, "lost");
   
 };
 
 Coin.prototype.collide = function(state) {
-  let filtered = state.actors.filter(a => a != this);
-  let status = state.status;
-  if (!filtered.some(a => a.type == "coin")) status = "won";
-  return new State(state.level, filtered, status);
+	audio = document.getElementById("coin")
+	audio.play()	
+	let filtered = state.actors.filter(a => a != this);
+	let status = state.status;
+	if (!filtered.some(a => a.type == "coin")) status = "won";
+	return new State(state.level, filtered, status);
 };
 
 Lava.prototype.update = function(time, state) {
@@ -309,6 +313,8 @@ Player.prototype.update = function(time, state, keys) {
   if (!state.level.touches(movedY, this.size, "wall") && !state.level.touches(movedY, this.size, "bloque")) {
     pos = movedY;
   } else if (keys.ArrowUp && ySpeed > 0) {
+	audio = document.getElementById("jump")
+	audio.play()	
     ySpeed = -jumpSpeed;
   } else {
     ySpeed = 0;
