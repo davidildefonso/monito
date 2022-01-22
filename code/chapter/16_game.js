@@ -236,8 +236,16 @@ State.prototype.update = function(time, keys) {
 
   let player = newState.player;
   if (this.level.touches(player.pos, player.size, "lava")) {
+	audio = document.getElementById("lost")
+	audio.play()	
 	lives--	
 	document.getElementById("lives").innerText = lives
+
+	audio = document.getElementById("musica")
+	audio.pause()
+	audio.currentTime = 0;
+	clearInterval(restartAudio)
+
     return new State(this.level, actors, "lost");
   }
 
@@ -261,6 +269,13 @@ Lava.prototype.collide = function(state) {
 	audio.play()	
 	lives--	
 	document.getElementById("lives").innerText = lives
+
+	audio = document.getElementById("musica")
+	audio.pause()
+	audio.currentTime = 0;
+	clearInterval(restartAudio)
+
+	
   	return new State(state.level, state.actors, "lost");
   
 };
@@ -325,8 +340,17 @@ Player.prototype.update = function(time, state, keys) {
   if (!state.level.touches(movedY, this.size, "wall") && !state.level.touches(movedY, this.size, "bloque")) {
     pos = movedY;
   } else if (keys.ArrowUp && ySpeed > 0) {
+	
 	audio = document.getElementById("jump")
-	audio.play()	
+	if (audio.paused == false) {
+		audio.pause();
+		audio.currentTime = 0;
+		audio.play()
+	}else{
+		audio.play()
+	}
+
+	
     ySpeed = -jumpSpeed;
   } else {
     ySpeed = 0;
@@ -394,6 +418,11 @@ async function runGame(plans, Display) {
   for (let level = 0; level < plans.length;) {
     let status = await runLevel(new Level(plans[level]),
                                 Display);
+
+	audio = document.getElementById("musica")
+	audio.play()	
+	setInterval(restartAudio,33000)
+
 	if (lives == 0) {
 		endGame();
 		return
