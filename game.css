@@ -68,7 +68,7 @@ body {
 
 	width: 100vw;
 	height: 100vh;
-	background-image: url("img/fondomonos.jpg");
+	background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("img/fondomonos.jpg");  
 	background-repeat: no-repeat;
   	background-size: cover;
 	
@@ -90,6 +90,14 @@ body {
 
 
 #boton-menu{
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	width: 250px;
+	height: 250px;
+}
+
+#boton-restart{
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
