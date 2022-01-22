@@ -270,7 +270,11 @@ Coin.prototype.collide = function(state) {
 	audio.play()	
 	let filtered = state.actors.filter(a => a != this);
 	let status = state.status;
-	if (!filtered.some(a => a.type == "coin")) status = "won";
+	if (!filtered.some(a => a.type == "coin"))  {
+		audio = document.getElementById("winlevel")
+		audio.play()	
+		status = "won";
+	} 
 	return new State(state.level, filtered, status);
 };
 
@@ -386,7 +390,7 @@ async function runGame(plans, Display) {
 		endGame();
 		return
 	};
-    if (status == "won") level++;
+    if (status == "won")   level++;
   }
   console.log("You've won!");
 }
