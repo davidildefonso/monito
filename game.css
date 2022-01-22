@@ -36,13 +36,18 @@ body {
 #menu{
 	width: 100vw;
 	height: 100vh;
-	background-color: brown;
+	background-image: url("img/fondomonos.jpg");
+	background-repeat: no-repeat;
+  	background-size: cover;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	font-family:'Gloria Hallelujah', cursive ;
-	font-size:48px;
+	font-size:96px;
+	color: #ff9654;
+	font-weight: bold;
+	text-shadow: 1px 1px 2px black;
 }
 
 
@@ -50,6 +55,12 @@ body {
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
+	width: 250px;
+	height: 250px;
+}
+
+#botonplay img{
+	width: 100%;
 }
 
 #menu-final{
