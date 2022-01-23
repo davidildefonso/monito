@@ -398,23 +398,34 @@ function runLevel(level, Display) {
 	let display = new Display(document.getElementById("canvas"), level);
 	let state = State.start(level);
 	
-	let ending = 1;
+	let ending = 3;
 	return new Promise(resolve => {
 
 		console.log(state)
 		runAnimation(time => {
-		state = state.update(time, arrowKeys);
-		display.syncState(state);
-		if (state.status == "playing") {
-			return true;
-		} else if (ending > 0) {
-			ending -= time;
-			return true;
-		} else {
-			display.clear();
-			resolve(state.status);
-			return false;
-		}
+			state = state.update(time, arrowKeys);
+			display.syncState(state);
+			if (state.status == "playing") {
+				return true;
+			} else if (ending > 0) {
+				console.log(ending)
+
+				clearInterval(musicInterval)
+				audioGame.pause()
+				audioGame.currentTime = 0;
+
+				if(ending - 1  < 0.001 ){
+					console.log("fade out animation")
+					document.getElementById("screen-cover").classList.add("fade-out")
+				}
+
+				ending -= time;
+				return true;
+			} else {
+				display.clear();
+				resolve(state.status);
+				return false;
+			}
 		});
 	});
 }

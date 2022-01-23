@@ -104,3 +104,42 @@ body {
 	width: 250px;
 	height: 250px;
 }
+
+
+#screen-cover{
+	
+	background-color: rgba(0,0,0,1);
+	height: 0;
+	width: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-top: 0;
+	border-bottom: 0;
+	border-left: 0;
+	border-right: 0;
+	border-color: #000;
+	border-style: solid;
+	transform: translate(-50%, - 50%);
+	
+}
+
+
+.fade-out{
+	animation: fadeout 1s linear  ;
+	
+	
+}
+
+
+@keyframes fadeout {
+	to{
+		border-top: 50vh;
+		border-bottom: 50vh;
+		border-left: 50vw;
+		border-right:  50vw;
+		border-color: #000;
+		border-style: solid;
+		
+	}
+}
