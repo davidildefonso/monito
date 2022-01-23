@@ -11,7 +11,7 @@ var simpleLevelPlan = `
 
 
 
-let lives = 6
+let lives = 1
 
 var Level = class Level {
   constructor(plan) {
@@ -401,21 +401,21 @@ function runLevel(level, Display) {
 	let ending = 3;
 	return new Promise(resolve => {
 
-		console.log(state)
+	
 		runAnimation(time => {
 			state = state.update(time, arrowKeys);
 			display.syncState(state);
 			if (state.status == "playing") {
 				return true;
 			} else if (ending > 0) {
-				console.log(ending)
+			
 
 				clearInterval(musicInterval)
 				audioGame.pause()
 				audioGame.currentTime = 0;
 
 				if(ending - 1  < 0.001 ){
-					console.log("fade out animation")
+					
 					document.getElementById("screen-cover").classList.add("fade-out")
 				}
 
@@ -444,11 +444,14 @@ async function runGame(plans, Display) {
 
 		clearInterval(musicInterval)
 
-		endGame();
+		endGame("lose");
 
 		return
 	};
     if (status == "won")   level++;
   }
-  console.log("You've won!");
+
+
+  endGame("win");
+ 
 }

@@ -36,12 +36,15 @@
 
 	<div id="menu-final" >
 		<div>
+			<p id="menu-final-msg"></p>
+		</div>
+		<div id="menu-final-buttons-div">
 			<button id="boton-restart" onclick="restart()"  >
 				<img src="img/retry.png"  />
 			</button>		
 			<button id="boton-menu" onclick="home()"  >
 				<img src="img/menu plataforma monito.png"  />
-			</button>		
+			</button>	
 		</div>
 	</div>
 
@@ -61,13 +64,22 @@
 		runGame(GAME_LEVELS, CanvasDisplay);
 	}
 
-	function endGame(){
+	function endGame(status){
 		audioGame.pause();
 		audioGame.currentTime = 0;
 		clearInterval(musicInterval)
+
+		if(status === "lose"){
+			document.getElementById("menu-final-msg").innerText = "YOU'VE LOST! "
+		}else if(status === "win"){
+			document.getElementById("menu-final-msg").innerText = "YOU'VE WON!"
+		}
+
 		document.getElementById("principal").style.display = "none"
 		document.getElementById("menu-final").style.display = "flex"
-		lives = 6;
+		lives = 1;
+
+		
 	}
 
 	function restart(){
