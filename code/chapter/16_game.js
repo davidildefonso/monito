@@ -11,7 +11,7 @@ var simpleLevelPlan = `
 
 
 
-let lives = 1
+let lives = 6
 
 var Level = class Level {
   constructor(plan) {
