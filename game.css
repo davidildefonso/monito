@@ -27,6 +27,12 @@ body {
 
 }
 
+
+#info img{
+	height: 100%;
+
+}
+
 #principal{
 	display:none;
 }
